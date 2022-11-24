@@ -20,9 +20,17 @@ namespace zadanie.Controllers
 
         // GET: api/Shops
         [HttpGet]
-        public async Task<IEnumerable<Shop>> GetShop()
+        public async Task<IEnumerable<Shop>> GetShops()
         {
             var result = await _shopService.GetAllAsync();
+            return result;
+        }
+
+        // GET: api/Shops
+        [HttpGet("GetWithDetails/{id}")]
+        public async Task<Shop> GetShopWithDetail(int id)
+        {
+            var result = await _shopService.GetWithDetailsByIdAsync(id);
             return result;
         }
 

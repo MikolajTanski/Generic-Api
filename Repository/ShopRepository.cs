@@ -16,17 +16,18 @@ namespace zadanie.Repository
 
         public async Task<Shop> GetShopByIdAsync(int id)
         {
-            return await GetByCondition(p => p.Id == id).FirstOrDefaultAsync();
+            return await GetByCondition(s => s.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Shop> GetShopWithDetailsByIdAsync(int id)
         {
-            return await GetByCondition(p => p.Id == id).Include(p => p.Products).FirstOrDefaultAsync();
+            return await GetByCondition(s => s.Id == id).Include(p => p.Products).FirstOrDefaultAsync();
         }
         public async Task<IEnumerable<Shop>> GetAllShopsAsync()
         {
             return await GetAll()
-                .OrderBy(p => p.Id)
+                .OrderBy(s => s.Id)
+                .Include(p => p.Products)
                 .ToListAsync();
         }
         public void CreateShop(Shop shop)

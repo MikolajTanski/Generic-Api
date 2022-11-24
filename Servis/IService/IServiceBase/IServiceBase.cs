@@ -9,6 +9,7 @@ namespace zadanie.Servis.IService.IServiceBase
     {
         public Task<List<EntityType>> GetAllAsync();
         public Task<EntityType> GetByIdAsync(int id);
+        public Task<EntityType> GetWithDetailsByIdAsync(int id);
         public IEnumerable<EntityType> GetByCondition(Expression<Func<EntityType, bool>> expression);
         public void Create(EntityType entity);
         public void Update(EntityType entity);

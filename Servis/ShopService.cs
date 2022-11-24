@@ -43,8 +43,14 @@ namespace zadanie.Servis
 
         public async Task<Shop> GetByIdAsync(int id)
         {
-            var contact = await _shopRepository.GetShopByIdAsync(id);
-            return contact;
+            var shop = await _shopRepository.GetShopByIdAsync(id);
+            return shop;
+        }
+
+        public async Task<Shop> GetWithDetailsByIdAsync(int id)
+        {
+            var shop = await _shopRepository.GetShopWithDetailsByIdAsync(id);
+            return shop;
         }
 
         public void Update(Shop entity)
