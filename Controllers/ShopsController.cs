@@ -18,15 +18,13 @@ namespace zadanie.Controllers
             _shopService = shopService;
         }
 
-        // GET: api/Shops
-        [HttpGet]
+        [HttpGet("Get")]
         public async Task<IEnumerable<Shop>> GetShops()
         {
             var result = await _shopService.GetAllAsync();
             return result;
         }
 
-        // GET: api/Shops
         [HttpGet("GetWithDetails/{id}")]
         public async Task<Shop> GetShopWithDetail(int id)
         {
@@ -34,7 +32,6 @@ namespace zadanie.Controllers
             return result;
         }
 
-        // GET: api/Shops/5
         [HttpGet("Get/{id}")]
         public async Task<Shop> GetShopById(int id)
         {
@@ -42,20 +39,18 @@ namespace zadanie.Controllers
             return result;
         }
 
-        // PUT: api/Shops/5
         [HttpPut("Add")]
         public void AddShop([FromBody] Shop shop)
         {
             _shopService.Update(shop);
         }
 
-        // POST: api/Shops
         [HttpPost("Post")]
         public void PostShop([FromBody] Shop shop)
         {
             _shopService.Create(shop);
         }
-        // DELETE: api/Shops/5
+
         [HttpDelete("Delete/{id}")]
         public void DeleteShop(int id)
         {
