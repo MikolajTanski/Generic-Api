@@ -18,11 +18,13 @@ namespace zadanie.Repository.IRepository.RepositoryBase
         public void Create(T entity)
         {
             _db.Set<T>().Add(entity);
+            _db.SaveChanges();
         }
 
         public void Delete(T entity)
         {
             _db.Set<T>().Remove(entity);
+            _db.SaveChanges();
         }
 
         public IQueryable<T> GetAll()
@@ -38,6 +40,7 @@ namespace zadanie.Repository.IRepository.RepositoryBase
         public void Update(T entity)
         {
             _db.Set<T>().Update(entity);
+            _db.SaveChanges();
         }
     }
 
