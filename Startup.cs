@@ -5,7 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
+using zadanie.Repository;
+using zadanie.Repository.IRepository;
 using zadanie.Servis;
 using zadanie.Servis.IService;
 
@@ -23,10 +24,11 @@ namespace zadanie
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddJsonOptions(x =>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddScoped<ShopService>();
+            services.AddScoped<IShopRepository, ShopRepository>();
             services.AddScoped<IShopService, ShopService>();
+            //services.AddControllers().AddJsonOptions(x =>
+            //x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaulConnection")));
             services.AddControllers();

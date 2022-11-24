@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using zadanie.Models;
+using zadanie.Repository.IRepository;
 using zadanie.Repository.IRepository.RepositoryBase;
 
 namespace zadanie.Repository
 {
-    public class ShopRepository : RepositoryBase<Shop>
+    public class ShopRepository : RepositoryBase<Shop>, IShopRepository
     {
         public ShopRepository(DataContext db) : base(db)
         {

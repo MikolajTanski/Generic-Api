@@ -17,27 +17,27 @@ namespace zadanie.Repository.IRepository.RepositoryBase
 
         public void Create(T entity)
         {
-            this._db.Set<T>().Add(entity);
+            _db.Set<T>().Add(entity);
         }
 
         public void Delete(T entity)
         {
-            this._db.Set<T>().Remove(entity);
+            _db.Set<T>().Remove(entity);
         }
 
         public IQueryable<T> GetAll()
         {
-            return this._db.Set<T>().AsNoTracking();
+            return _db.Set<T>().AsNoTracking();
         }
 
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
-            return this._db.Set<T>().Where(expression).AsNoTracking();
+            return _db.Set<T>().Where(expression).AsNoTracking();
         }
 
         public void Update(T entity)
         {
-            this._db.Set<T>().Update(entity);
+            _db.Set<T>().Update(entity);
         }
     }
 
