@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using zadanie.Models;
 using zadanie.Servis;
+using zadanie.Servis.IService;
 
 namespace zadanie.Controllers
 {
@@ -9,7 +11,7 @@ namespace zadanie.Controllers
     [ApiController]
     public class ShopsController : ControllerBase
     {
-        private readonly ShopService _shopService;
+        private readonly IShopService _shopService;
 
         public ShopsController(ShopService shopService)
         {
@@ -18,42 +20,38 @@ namespace zadanie.Controllers
 
         // GET: api/Shops
         [HttpGet]
-        public IEnumerable<Shop> GetShops()
+        public async Task<IEnumerable<Shop>> GetShop()
         {
-            var result = _shopService.GetShops();
+            var result = await _shopService.GetAllAsync();
             return result;
         }
 
         // GET: api/Shops/5
         [HttpGet("Get/{id}")]
-        public Shop GetShop(int id)
+        public async Task<Shop> GetShopById(int id)
         {
-            var shop = _shopService.GetShopById(id);
-
-            return shop;
+            var result = await _shopService.GetByIdAsync(id);
+            return result;
         }
 
         // PUT: api/Shops/5
-        [HttpPut("Put")]
-        public void PutShop([FromBody] Shop shop)
+        [HttpPut("Add")]
+        public void AddShop([FromBody] Shop shop)
         {
-            _shopService.UpdateShop(shop);
-            _shopService.Save();
+            _shopService.Update(shop);
         }
 
         // POST: api/Shops
         [HttpPost("Post")]
         public void PostShop([FromBody] Shop shop)
         {
-            _shopService.InsertShop(shop);
-            _shopService.Save();
+            _shopService.Create(shop);
         }
         // DELETE: api/Shops/5
         [HttpDelete("Delete/{id}")]
         public void DeleteShop(int id)
         {
-            _shopService.DeleteShop(id);
-            _shopService.Save();
+            _shopService.Delete(id);
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using zadanie.Models;
 using zadanie.Repository.IRepository;
 using zadanie.Servis.IService;
@@ -8,42 +12,44 @@ namespace zadanie.Servis
     public class ShopService : IShopService
     {
         private readonly IShopRepository _shopRepository;
+
         public ShopService(IShopRepository shopRepository)
         {
             _shopRepository = shopRepository;
         }
 
-        public void DeleteShop(int shopId)
+        public void Create(Shop entity)
         {
-            var shop = _shopRepository.GetShopById(shopId);
-            _shopRepository.DeleteShop(shop);
+            _shopRepository.CreateShop(entity);
         }
 
-        public Shop GetShopById(int shopId)
+        public async void Delete(int id)
         {
-            var result = _shopRepository.GetShopById(shopId);
-            return result;
-        }
-        public IEnumerable<Shop> GetShops()
-        {
-            var result = _shopRepository.GetShops();
-            return result;
+            var shop = await this.GetByIdAsync(id);
+            _shopRepository.Delete(shop);
         }
 
-        public void InsertShop(Shop shop)
+        public async Task<List<Shop>> GetAllAsync()
         {
-            _shopRepository.InsertShop(shop);
+            var shops = await _shopRepository.GetAllShopsAsync();
+            return shops.ToList();
         }
 
-        public void Save()
+        public IEnumerable<Shop> GetByCondition(Expression<Func<Shop, bool>> expression)
         {
-            _shopRepository.Save();
+            var shop = _shopRepository.GetByCondition(expression).ToList();
+            return shop;
         }
 
-        public void UpdateShop(Shop shop)
+        public async Task<Shop> GetByIdAsync(int id)
         {
-            _shopRepository.UpdateShop(shop);
+            var contact = await _shopRepository.GetShopByIdAsync(id);
+            return contact;
         }
 
+        public void Update(Shop entity)
+        {
+            _shopRepository.UpdateShop(entity);
+        }
     }
 }

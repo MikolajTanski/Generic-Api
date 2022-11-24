@@ -1,47 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using zadanie.Models;
-using zadanie.Repository.IRepository;
+using zadanie.Repository.IRepository.RepositoryBase;
 
 namespace zadanie.Repository
 {
-    public class ShopRepository : IShopRepository
+    public class ShopRepository : RepositoryBase<Shop>
     {
-        private readonly DataContext _db;
-        public ShopRepository(DataContext db)
+        public ShopRepository(DataContext db) : base(db)
         {
-            _db = db;
+        }
+
+        public async Task<Shop> GetShopByIdAsync(int id)
+        {
+            return await GetByCondition(p => p.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Shop> GetShopWithDetailsByIdAsync(int id)
+        {
+            return await GetByCondition(p => p.Id == id).Include(p => p.Products).FirstOrDefaultAsync();
+        }
+        public async Task<IEnumerable<Shop>> GetAllShopsAsync()
+        {
+            return await GetAll()
+                .OrderBy(p => p.Id)
+                .ToListAsync();
+        }
+        public void CreateShop(Shop shop)
+        {
+            Create(shop);
         }
 
         public void DeleteShop(Shop shop)
         {
-            _db.Shops.Remove(shop);
-        }
-
-        public Shop GetShopById(int shopId)
-        {
-            return _db.Shops.Include(s => s.Products).Where(s => s.Id == shopId).FirstOrDefault();
-        }
-
-        public IEnumerable<Shop> GetShops()
-        {
-            return _db.Shops.Include(s => s.Products).ToList();
-        }
-
-        public void InsertShop(Shop shop)
-        {
-            _db.Shops.Add(shop);
-        }
-
-        public void Save()
-        {
-            _db.SaveChanges();
+            Delete(shop);
         }
 
         public void UpdateShop(Shop shop)
         {
-            _db.Entry(shop).State = EntityState.Modified;
+            Update(shop);
         }
     }
 }

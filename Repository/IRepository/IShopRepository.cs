@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using zadanie.Models;
+using zadanie.Repository.IRepository.RepositoryBase.IRepositoryBase;
 
 namespace zadanie.Repository.IRepository
 {
-    public interface IShopRepository
+    public interface IShopRepository : IRepositoryBase<Shop>
     {
-        public IEnumerable<Shop> GetShops();
-        public void InsertShop(Shop shop);
-        public Shop GetShopById(int shopId);
-        public void DeleteShop(Shop shop);
-        public void UpdateShop(Shop shop);
-        public void Save();
+        Task<IEnumerable<Shop>> GetAllShopsAsync();
+        Task<Shop> GetShopByIdAsync(int id);
+        Task<Shop> GetShopWithDetailsByIdAsync(int id);
+        void CreateShop(Shop shop);
+        void UpdateShop(Shop shop);
+        void DeleteShop(Shop shop);
     }
 }

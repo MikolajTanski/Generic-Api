@@ -6,9 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
-using zadanie.Repository;
-using zadanie.Repository.IRepository;
 using zadanie.Servis;
+using zadanie.Servis.IService;
 
 namespace zadanie
 {
@@ -27,7 +26,7 @@ namespace zadanie
             services.AddControllers().AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddScoped<ShopService>();
-            services.AddScoped<IShopRepository, ShopRepository>();
+            services.AddScoped<IShopService, ShopService>();
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaulConnection")));
             services.AddControllers();
