@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using zadanie.Models;
 
-namespace zadanie
+namespace zadanie.Data
 {
     public class DataContext : DbContext
     {

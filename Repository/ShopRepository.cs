@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using zadanie.Data;
+using zadanie.Exception;
 using zadanie.Models;
 using zadanie.Repository.IRepository;
 using zadanie.Repository.IRepository.RepositoryBase;
@@ -16,19 +18,34 @@ namespace zadanie.Repository
 
         public async Task<Shop> GetShopByIdAsync(int id)
         {
-            return await GetByCondition(s => s.Id == id).FirstOrDefaultAsync();
+
+            var shop = await GetByCondition(s => s.Id == id).FirstOrDefaultAsync();
+
+            if (shop == null) throw new NotFoundException("shop is not found");
+
+            return shop;
         }
 
         public async Task<Shop> GetShopWithDetailsByIdAsync(int id)
         {
-            return await GetByCondition(s => s.Id == id).Include(p => p.Products).FirstOrDefaultAsync();
+
+            var shop = await GetByCondition(s => s.Id == id).Include(p => p.Products).FirstOrDefaultAsync();
+
+            if (shop == null) throw new NotFoundException("shop is not found");
+
+            return shop;
         }
         public async Task<IEnumerable<Shop>> GetAllShopsAsync()
         {
-            return await GetAll()
+
+            var shop = await GetAll()
                 .OrderBy(s => s.Id)
                 .Include(p => p.Products)
                 .ToListAsync();
+
+            if (shop == null) throw new NotFoundException("shop is not found");
+
+            return shop;
         }
         public void CreateShop(Shop shop)
         {
@@ -37,11 +54,13 @@ namespace zadanie.Repository
 
         public void DeleteShop(Shop shop)
         {
+            if (shop == null) throw new NotFoundException("shop is not found");
             Delete(shop);
         }
 
         public void UpdateShop(Shop shop)
         {
+            if (shop == null) throw new NotFoundException("shop is not found");
             Update(shop);
         }
     }

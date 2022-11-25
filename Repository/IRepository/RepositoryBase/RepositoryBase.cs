@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using zadanie.Data;
 using zadanie.Repository.IRepository.RepositoryBase.IRepositoryBase;
 
 namespace zadanie.Repository.IRepository.RepositoryBase

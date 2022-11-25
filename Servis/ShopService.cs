@@ -25,7 +25,7 @@ namespace zadanie.Servis
 
         public async void Delete(int id)
         {
-            var shop = await this.GetByIdAsync(id);
+            var shop = await GetByIdAsync(id);
             _shopRepository.Delete(shop);
         }
 

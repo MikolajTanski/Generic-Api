@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using zadanie.Data;
+using zadanie.Middleware;
 using zadanie.Repository;
 using zadanie.Repository.IRepository;
 using zadanie.Servis;
@@ -28,6 +30,7 @@ namespace zadanie
             services.AddScoped<ShopService>();
             services.AddScoped<IShopRepository, ShopRepository>();
             services.AddScoped<IShopService, ShopService>();
+            services.AddScoped<ErrorHandling>();
             services.AddControllers().AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddDbContext<DataContext>(options =>
@@ -35,7 +38,7 @@ namespace zadanie
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "zadanie", Version = "v1" });
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "zadanie", Version = "v2" });
             });
         }
 
@@ -46,8 +49,10 @@ namespace zadanie
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "zadanie v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v2/swagger.json", "zadanie v2"));
             }
+
+            app.UseMiddleware<ErrorHandling>();
 
             app.UseHttpsRedirection();
 
