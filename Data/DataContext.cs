@@ -12,11 +12,5 @@ namespace zadanie.Data
 
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Product> Products { get; set; }
-
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }
