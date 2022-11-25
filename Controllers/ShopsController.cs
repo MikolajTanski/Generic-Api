@@ -39,7 +39,7 @@ namespace zadanie.Controllers
             return result;
         }
 
-        [HttpPut("Add")]
+        [HttpPut("Put")]
         public void AddShop([FromBody] Shop shop)
         {
             _shopService.Update(shop);
