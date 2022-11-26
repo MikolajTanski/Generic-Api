@@ -25,8 +25,10 @@ namespace zadanie.Servis
 
         public async void Delete(int id)
         {
-            var shop = await GetByIdAsync(id);
-            _shopRepository.Delete(shop);
+            //var shop = await GetByIdAsync(id);
+            var shop = await _shopRepository.GetShopByIdAsync(id);
+
+            _shopRepository.DeleteShop(shop);
         }
 
         public async Task<List<Shop>> GetAllAsync()
